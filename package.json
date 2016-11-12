@@ -1,0 +1,19 @@
+{
+  "name": "sendd",
+  "version": "1.0.0",
+  "description": "direct file sender",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Josh1147582/sendd.git"
+  },
+  "author": "Josh Bicking",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Josh1147582/sendd/issues"
+  },
+  "homepage": "https://github.com/Josh1147582/sendd#readme"
+}
