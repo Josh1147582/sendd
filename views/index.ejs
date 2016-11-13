@@ -3,17 +3,39 @@
   <head>
     <title>Sendd</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+    <script type="text/javascript" src="/javascripts/index.js"></script>
   </head>
   <body>
-  <script>
-    // Check for the various File API support.
-    if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
-      alert('The File APIs are not fully supported by your browser. This webapp will not work.');
-    }
-  </script>
     <h1>Sendd</h1>
     <p>Welcome to Sendd, a simple, direct file sender.</p>
-    <a href="/send">Send a file</a>
-    <a href="/receive">Receive a file</a>
+    <h3>Receive a file</h3>
+
+    <table border="1" width="100%" id="file_table">
+    <thead>
+    <tr>
+    <td colspan="4">Files sent to you:</td>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+    <p></p>
+    <td colspan="4">My ID: <strong id="my_id"></strong></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr id="empty_row">
+        <td colspan=4><i>No Files...</i></td>
+    </tr>
+    <tr>
+    </tr>
+    </tbody>
+    </table>
+
+    <h3>Send a file</h3>
+    <input type="file" id="file_to_send"><br/><br/>
+    <label>Destination ID (ask your reciever to send it to you):</label><br/>
+    <input type="text" id="dest_id"></br></br>
+    <button type="button" onclick="send();">Send</button> 
   </body>
 </html>

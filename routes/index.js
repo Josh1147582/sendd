@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var FileSaver = require('file-saver');
-
 /* PeerServer */
 var app = express();
 var ExpressPeerServer = require('peer').ExpressPeerServer;
