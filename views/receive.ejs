@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sendd - Receive a file</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+  </head>
+  <body>
+    <h1>Receive a file</h1>
+    <p>Give the sender the following id:</p>
+    <script>
+        // No API key required when not using cloud server
+        var peer = new Peer({host: 'localhost', port: 9000, path: '/node_modules/peerjs'});
+        peer.on('open', function(id) {
+            document.body.appendChild(document.createTextNode(peer.id));
+        });
+        peer.on('connection', function(conn) {
+            conn.on('data', function(data) {
+                var dataBlob = new Blob([data.file], {type: data.type});
+                var url = window.URL.createObjectURL(dataBlob);
+                var a = document.createElement("a");
+                var linkText = document.createTextNode("Download");
+                a.appendChild(linkText);
+                a.href = url;
+                a.setAttribute("download", data.name);
+                document.body.appendChild(a);
+            });
+        });
+
+    </script>
+  </body>
+</html>
+

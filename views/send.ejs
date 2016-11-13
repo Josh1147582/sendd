@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sendd - Send a file</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+    <script>
+        // No API key required when not using cloud server
+        var peer = new Peer({host: 'localhost', port: 9000, path: '/node_modules/peerjs'});
+        peer.on('open', function(id) {
+            console.log('My peer ID is: ' + id);
+        });
+
+    function send() {
+        // TODO figure out why this isn't calling the bottom stuff
+        var valid = true;
+        if(!document.getElementById("file_to_send").files[0]) {
+            valid = false;
+            alert("Please select a file.");
+        }
+        if(!document.getElementById("dest_id").value) {
+            valid = false;
+            alert("Please provide a Destination ID.");
+        }
+        if(!valid){
+            return;
+        }
+
+        var blob = new Blob([document.getElementById("file_to_send").files[0]], {type: document.getElementById("file_to_send").files[0].type});
+        var con = peer.connect(document.getElementById("dest_id").value); 
+        con.send({
+            name: document.getElementById("file_to_send").files[0].name,
+            file: blob,
+            type: document.getElementById("file_to_send").files[0].type
+        });
+    }
+    </script>
+  </head>
+  <body>
+    <h1>Send a file</h1>
+    <input type="file" id="file_to_send"><br/><br/>
+    <label>Destination ID (ask your reciever to send it to you):</label><br/>
+    <input type="text" id="dest_id"></br></br>
+    <button type="button" onclick="send();">Send</button> 
+  </body>
+</html>
