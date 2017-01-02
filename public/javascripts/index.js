@@ -9,39 +9,36 @@ var peer = new Peer({host: 'localhost', port: 9000, path: '/node_modules/peerjs'
 // Send a file
 function send() {
     // Check that all fields are filled
-    var valid = true;
     var file_to_send = document.getElementById("file_to_send").files[0];
     var dest_id = document.getElementById("dest_id").value;
-    if(!file_to_send) {
-        valid = false;
+    if(!file_to_send && !dest_id) {
+        alert("Please select a file and previde a Destination ID.");
+    }
+    else if(!file_to_send) {
         alert("Please select a file.");
     }
-    if(!dest_id) {
-        valid = false;
+    else if(!dest_id) {
         alert("Please provide a Destination ID.");
     }
     else if (dest_id === peer.id) {
-        valid = false;
         alert("You can't send a file to yourself!");
     }
-    if(!valid){
-        return;
+    else {
+	// Build blob from file and file type
+	var blob = new Blob([file_to_send], {type: file_to_send.type});
+
+	// Connect to the desired peer
+	var con = peer.connect(dest_id, { label: 'file', reliable: true}); 
+
+	con.on('open', function() {
+	    // Send arr of blob and file data
+	    con.send({
+		name: document.getElementById("file_to_send").files[0].name,
+		file: blob,
+		type: document.getElementById("file_to_send").files[0].type
+	    });
+	});
     }
-
-    // Build blob from file and file type
-    var blob = new Blob([file_to_send], {type: file_to_send.type});
-
-    // Connect to the desired peer
-    var con = peer.connect(dest_id, { label: 'file', reliable: true}); 
-
-    con.on('open', function() {
-        // Send arr of blob and file data
-        con.send({
-            name: document.getElementById("file_to_send").files[0].name,
-            file: blob,
-            type: document.getElementById("file_to_send").files[0].type
-        });
-    });
 }
 
 // Display ID
@@ -53,6 +50,9 @@ peer.on('open', function(id) {
 peer.on('connection', function(conn) {
     conn.on('open', function() {
         conn.on('data', function(data) {
+	    // TODO consider sending a size blob beforehand, or a size field in the blob
+	    // A good starting point would be to continuously update the entry with how
+	    // much data was downloaded
             var blob = new Blob([data.file], {type: data.type});
             var url = window.URL.createObjectURL(blob);
  

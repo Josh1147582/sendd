@@ -19,3 +19,12 @@ Or build and run the docker container at:
 
 Connect to the server (by default) at localhost:3000. Port 9000 must also be open for the peer server to communicate with clients.
 
+#TODO:
+Progression indicator
+SSL support
+Distributed system support (many outlets supporting one ID source)
+UI improvements
+Mobile support, either through an app or easier web access
+Standalone Desktop client?
+QR codes, rather than ID numbers
+Words for ID names, rather than ID numbers (suggested by Adelphius)
