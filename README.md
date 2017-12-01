@@ -19,7 +19,7 @@ Or build and run the docker container at:
 
 Connect to the server (by default) at localhost:3000. Port 9000 must also be open for the peer server to communicate with clients.
 
-#TODO:
+# TODO:
 
 Progression indicator
 SSL support
